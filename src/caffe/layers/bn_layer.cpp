@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <vector>
 
-#include "caffe/common_layers.hpp"
+#include "caffe/custom_layers.hpp"
 #include "caffe/filler.hpp"
 #include "caffe/layer.hpp"
 #include "caffe/util/math_functions.hpp"
@@ -263,6 +263,6 @@ void BNLayer<Dtype>::Backward_cpu(const vector<Blob<Dtype>*>& top,
 #endif
 
 	INSTANTIATE_CLASS(BNLayer);
-	REGISTER_LAYER_CLASS(BN);
+	
 
 }  // namespace caffe

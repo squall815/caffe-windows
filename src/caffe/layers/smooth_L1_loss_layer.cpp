@@ -5,7 +5,7 @@
 // Written by Ross Girshick
 // ------------------------------------------------------------------
 
-#include "caffe/loss_layers.hpp"
+#include "caffe/custom_layers.hpp"
 
 namespace caffe {
 
@@ -50,6 +50,6 @@ STUB_GPU(SmoothL1LossLayer);
 #endif
 
 INSTANTIATE_CLASS(SmoothL1LossLayer);
-REGISTER_LAYER_CLASS(SmoothL1Loss);
+
 
 }  // namespace caffe

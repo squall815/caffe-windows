@@ -7,7 +7,7 @@
 
 #include <cfloat>
 
-#include "caffe/vision_layers.hpp"
+#include "caffe/custom_layers.hpp"
 
 using std::max;
 using std::min;
@@ -136,6 +136,6 @@ STUB_GPU(ROIPoolingLayer);
 #endif
 
 INSTANTIATE_CLASS(ROIPoolingLayer);
-REGISTER_LAYER_CLASS(ROIPooling);
+
 
 }  // namespace caffe

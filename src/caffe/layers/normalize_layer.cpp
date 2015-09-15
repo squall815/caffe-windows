@@ -4,7 +4,7 @@
 
 #include "caffe/layer.hpp"
 #include "caffe/util/math_functions.hpp"
-#include "caffe/vision_layers.hpp"
+#include "caffe/custom_layers.hpp"
 
 namespace caffe {
 
@@ -56,6 +56,6 @@ STUB_GPU(NormalizeLayer);
 #endif
 
 INSTANTIATE_CLASS(NormalizeLayer);
-REGISTER_LAYER_CLASS(Normalize);
+
 
 }  // namespace caffe

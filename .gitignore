@@ -56,7 +56,6 @@ Makefile.config
 # 1. reference, and not casually committed
 # 2. custom, and live on their own unless they're deliberated contributed
 data/*
-models/*
 *.caffemodel
 *.solverstate
 *.binaryproto
@@ -112,3 +111,5 @@ MANIFEST-*
 *.bmp
 *.png
 
+3rdparty2013
+3rdparty2012

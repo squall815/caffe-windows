@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "caffe/layer.hpp"
-#include "caffe/loss_layers.hpp"
+#include "caffe/custom_layers.hpp"
 #include "caffe/util/io.hpp"
 #include "caffe/util/math_functions.hpp"
 
@@ -14,8 +14,6 @@ void TripletLossLayer<Dtype>::LayerSetUp(
   LossLayer<Dtype>::LayerSetUp(bottom, top);
   CHECK_EQ(bottom[0]->channels(), bottom[1]->channels());
   CHECK_EQ(bottom[0]->channels(), bottom[2]->channels());
-  CHECK_EQ(bottom[0]->channels(), bottom[3]->channels());
-  CHECK_EQ(bottom[0]->channels(), bottom[4]->channels());
   CHECK_EQ(bottom[0]->height(), 1);
   CHECK_EQ(bottom[0]->width(), 1);
   CHECK_EQ(bottom[1]->height(), 1);
@@ -149,6 +147,6 @@ STUB_GPU(TripletLossLayer);
 #endif
 
 INSTANTIATE_CLASS(TripletLossLayer);
-REGISTER_LAYER_CLASS(TripletLoss);
+
 
 }  // namespace caffe

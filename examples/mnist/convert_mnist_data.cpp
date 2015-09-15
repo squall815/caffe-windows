@@ -14,11 +14,13 @@
 #include <lmdb.h>
 #include <stdint.h>
 #include <sys/stat.h>
+#include <direct.h>
 
 #include <fstream>  // NOLINT(readability/streams)
 #include <string>
 
 #include "caffe/proto/caffe.pb.h"
+#include "caffe/common.hpp"
 
 using namespace caffe;  // NOLINT(build/namespaces)
 using std::string;
@@ -83,7 +85,7 @@ void convert_dataset(const char* image_filename, const char* label_filename,
     batch = new leveldb::WriteBatch();
   } else if (db_backend == "lmdb") {  // lmdb
     LOG(INFO) << "Opening lmdb " << db_path;
-    CHECK_EQ(mkdir(db_path, 0744), 0)
+    CHECK_EQ(_mkdir(db_path), 0)
         << "mkdir " << db_path << "failed";
     CHECK_EQ(mdb_env_create(&mdb_env), MDB_SUCCESS) << "mdb_env_create failed";
     CHECK_EQ(mdb_env_set_mapsize(mdb_env, 1099511627776), MDB_SUCCESS)  // 1TB
@@ -117,7 +119,7 @@ void convert_dataset(const char* image_filename, const char* label_filename,
     label_file.read(&label, 1);
     datum.set_data(pixels, rows*cols);
     datum.set_label(label);
-    snprintf(key_cstr, kMaxKeyLength, "%08d", item_id);
+    sprintf_s(key_cstr, kMaxKeyLength, "%08d", item_id);
     datum.SerializeToString(&value);
     string keystr(key_cstr);
 
@@ -156,15 +158,22 @@ void convert_dataset(const char* image_filename, const char* label_filename,
     if (db_backend == "leveldb") {  // leveldb
       db->Write(leveldb::WriteOptions(), batch);
       delete batch;
-      delete db;
     } else if (db_backend == "lmdb") {  // lmdb
       CHECK_EQ(mdb_txn_commit(mdb_txn), MDB_SUCCESS) << "mdb_txn_commit failed";
-      mdb_close(mdb_env, mdb_dbi);
-      mdb_env_close(mdb_env);
     } else {
       LOG(FATAL) << "Unknown db backend " << db_backend;
     }
     LOG(ERROR) << "Processed " << count << " files.";
+  }
+
+  if (db_backend == "leveldb") {  // leveldb
+	  delete db;
+  } else if (db_backend == "lmdb") {  // lmdb
+	  mdb_close(mdb_env, mdb_dbi);
+	  mdb_env_close(mdb_env);
+  }
+  else {
+	  LOG(FATAL) << "Unknown db backend " << db_backend;
   }
   delete pixels;
 }
@@ -173,7 +182,7 @@ int main(int argc, char** argv) {
 #ifndef GFLAGS_GFLAGS_H_
   namespace gflags = google;
 #endif
-
+  FLAGS_alsologtostderr = 1;
   gflags::SetUsageMessage("This script converts the MNIST dataset to\n"
         "the lmdb/leveldb format used by Caffe to load data.\n"
         "Usage:\n"
@@ -183,16 +192,17 @@ int main(int argc, char** argv) {
         "    http://yann.lecun.com/exdb/mnist/\n"
         "You should gunzip them after downloading,"
         "or directly use data/mnist/get_mnist.sh\n");
-  gflags::ParseCommandLineFlags(&argc, &argv, true);
-
+  //gflags::ParseCommandLineFlags(&argc, &argv, true);
+  caffe::GlobalInit(&argc, &argv);
   const string& db_backend = FLAGS_backend;
 
   if (argc != 4) {
     gflags::ShowUsageWithFlagsRestrict(argv[0],
         "examples/mnist/convert_mnist_data");
   } else {
-    google::InitGoogleLogging(argv[0]);
-    convert_dataset(argv[1], argv[2], argv[3], db_backend);
+    //google::InitGoogleLogging(argv[0]);
+	  
+	  convert_dataset(argv[1], argv[2], argv[3], db_backend);
   }
   return 0;
 }
