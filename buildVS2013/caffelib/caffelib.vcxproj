@@ -219,6 +219,8 @@
     <ClCompile Include="..\..\src\caffe\layers\contrastive_loss_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\conv_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\cudnn_conv_layer.cpp" />
+    <ClCompile Include="..\..\src\caffe\layers\cudnn_ndconv_layer.cpp" />
+    <ClCompile Include="..\..\src\caffe\layers\cudnn_ndpooling_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\cudnn_pooling_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\cudnn_relu_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\cudnn_sigmoid_layer.cpp" />
@@ -347,6 +349,8 @@
     <CudaCompile Include="..\..\src\caffe\layers\contrastive_loss_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\conv_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\cudnn_conv_layer.cu" />
+    <CudaCompile Include="..\..\src\caffe\layers\cudnn_ndconv_layer.cu" />
+    <CudaCompile Include="..\..\src\caffe\layers\cudnn_ndpooling_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\cudnn_pooling_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\cudnn_relu_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\cudnn_sigmoid_layer.cu" />
