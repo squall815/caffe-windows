@@ -545,8 +545,8 @@ void initGlog()
 	LOG_FATAL_FILE = FLAGS_log_dir + "FATAL" + now_time + ".txt";
 	google::SetLogDestination(google::GLOG_FATAL, LOG_FATAL_FILE.c_str());
 	FLAGS_alsologtostderr = 1;
-	string log_dir = "D:\\log\\";
-	string log_file = log_dir + "INFO" + now_time + ".txt";
+	string log_dir = ".\\log\\";
+	string log_file = log_dir + "MATLAB_INFO" + now_time + ".txt";
 	FILE *stream = freopen(log_file.c_str(), "w", stderr);
 
 	if (stream == NULL)
