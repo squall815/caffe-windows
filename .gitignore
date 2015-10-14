@@ -84,6 +84,7 @@ bin
 *.dll
 *.exp
 *.deps
+*.suo
 
 # Generated documentation
 docs/_site
