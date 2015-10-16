@@ -252,11 +252,26 @@
     <ClCompile Include="..\..\src\caffe\layer.cpp" />
     <ClCompile Include="..\..\src\caffe\net.cpp" />
     <ClCompile Include="..\..\src\caffe\layer_factory.cpp" />
-    <ClCompile Include="..\..\src\caffe\layers\covariance_layer.cpp"/>
+    <ClCompile Include="..\..\src\caffe\layers\covariance_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\cudnn_ndconv_layer.cpp">
       <Filter>layers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\caffe\layers\cudnn_ndpooling_layer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\caffe\layers\scalar_layer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\caffe\layers\lstm_layer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\caffe\layers\lstm_unit_layer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\caffe\layers\rnn_layer.cpp">
+      <Filter>layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\caffe\layers\recurrent_layer.cpp">
       <Filter>layers</Filter>
     </ClCompile>
   </ItemGroup>
@@ -385,6 +400,9 @@
       <Filter>header</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\caffe\loss_layers.hpp">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\caffe\sequence_layers.hpp">
       <Filter>header</Filter>
     </ClInclude>
   </ItemGroup>
@@ -567,7 +585,16 @@
     </CudaCompile>
     <CudaCompile Include="..\..\src\caffe\layers\covariance_layer.cu">
       <Filter>layers</Filter>
-    </CudaCompile>    
+    </CudaCompile>
+    <CudaCompile Include="..\..\src\caffe\layers\recurrent_layer.cu">
+      <Filter>layers</Filter>
+    </CudaCompile>
+    <CudaCompile Include="..\..\src\caffe\layers\scalar_layer.cu">
+      <Filter>layers</Filter>
+    </CudaCompile>
+    <CudaCompile Include="..\..\src\caffe\layers\lstm_unit_layer.cu">
+      <Filter>layers</Filter>
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\src\caffe\CMakeLists.txt" />
