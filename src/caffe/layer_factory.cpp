@@ -247,7 +247,7 @@ REGISTER_LAYER_CREATOR(TanH, GetTanHLayer);
 #ifdef WITH_PYTHON_LAYER
 template <typename Dtype>
 shared_ptr<Layer<Dtype> > GetPythonLayer(const LayerParameter& param) {
-  init_python_environment();
+	Py_Initialize();
   try {
     bp::object module = bp::import(param.python_param().module().c_str());
     bp::object layer = module.attr(param.python_param().layer().c_str())(param);

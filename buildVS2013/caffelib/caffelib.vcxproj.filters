@@ -274,9 +274,6 @@
     <ClCompile Include="..\..\src\caffe\layers\recurrent_layer.cpp">
       <Filter>layers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\caffe\layers\python_layer.cpp">
-      <Filter>layers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\caffe\layers\reverse_layer.cpp">
       <Filter>layers</Filter>
     </ClCompile>
@@ -648,7 +645,7 @@
     </CudaCompile>
     <CudaCompile Include="..\..\src\caffe\layers\eltwise_affine_layer.cu">
       <Filter>layers</Filter>
-    </CudaCompile>    
+    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\src\caffe\CMakeLists.txt" />
