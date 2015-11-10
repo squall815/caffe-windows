@@ -171,8 +171,8 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -266,6 +266,7 @@
     <ClCompile Include="..\..\src\caffe\layers\reduction_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\relu_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\reshape_layer.cpp" />
+    <ClCompile Include="..\..\src\caffe\layers\reverse_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\rnn_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\roi_pooling_layer.cpp" />
     <ClCompile Include="..\..\src\caffe\layers\scalar_layer.cpp" />
@@ -393,6 +394,7 @@
     <CudaCompile Include="..\..\src\caffe\layers\recurrent_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\reduction_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\relu_layer.cu" />
+    <CudaCompile Include="..\..\src\caffe\layers\reverse_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\roi_pooling_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\scalar_layer.cu" />
     <CudaCompile Include="..\..\src\caffe\layers\sigmoid_cross_entropy_loss_layer.cu" />

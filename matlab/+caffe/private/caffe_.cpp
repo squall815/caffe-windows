@@ -504,60 +504,7 @@ static void read_mean(MEX_ARGS) {
   mxFree(mean_proto_file);
 }
 
-static bool is_log_inited = false;
 
-static void glog_failure_handler() {
-  static bool is_glog_failure = false;
-  if (!is_glog_failure) {
-    is_glog_failure = true;
-    ::google::FlushLogFiles(0);
-    mexErrMsgTxt("glog check error, please check log and clear mex");
-  }
-}
-
-static void protobuf_log_handler(::google::protobuf::LogLevel level, const char* filename, int line,
-  const std::string& message) {
-  const int max_err_length = 512;
-  char err_message[max_err_length];
-  sprintf_s(err_message, max_err_length, "Protobuf : %s . at %s Line %d",
-    message.c_str(), filename, line);
-  LOG(INFO) << err_message;
-  ::google::FlushLogFiles(0);
-  mexErrMsgTxt(err_message);
-}
-
-// Usage: caffe_('init_log', log_base_filename)
-static void init_log(MEX_ARGS) {
-  mxCHECK(nrhs == 1 && mxIsChar(prhs[0]),
-    "Usage: caffe_('init_log', log_dir)");
-  if (is_log_inited)
-    ::google::ShutdownGoogleLogging();
-  char* log_base_filename = mxArrayToString(prhs[0]);
-  ::google::SetLogDestination(0, log_base_filename);
-  mxFree(log_base_filename);
-  ::google::protobuf::SetLogHandler(&protobuf_log_handler);
-  ::google::InitGoogleLogging("caffe_mex");
-  ::google::InstallFailureFunction(&glog_failure_handler);
-
-  is_log_inited = true;
-}
-
-void initGlog() {
-  if (is_log_inited) return;
-  string log_dir = ".\\log\\";
-  _mkdir(log_dir.c_str());
-  std::string now_time = boost::posix_time::to_iso_extended_string(boost::posix_time::second_clock::local_time());
-  now_time[13] = '-';
-  now_time[16] = '-';
-  string log_file = log_dir + "INFO" + now_time + ".txt";
-  const char* log_base_filename = log_file.c_str();
-  ::google::SetLogDestination(0, log_base_filename);
-  ::google::protobuf::SetLogHandler(&protobuf_log_handler);
-  ::google::InitGoogleLogging("caffe_mex");
-  ::google::InstallFailureFunction(&glog_failure_handler);
-
-  is_log_inited = true;
-}
 
 /** -----------------------------------------------------------------
 ** Available commands.
@@ -568,38 +515,71 @@ struct handler_registry {
 };
 
 static handler_registry handlers[] = {
-  // Public API functions
-  { "get_solver", get_solver },
-  { "solver_get_attr", solver_get_attr },
-  { "solver_get_iter", solver_get_iter },
-  { "solver_restore", solver_restore },
-  { "solver_solve", solver_solve },
-  { "solver_step", solver_step },
-  { "get_net", get_net },
-  { "net_get_attr", net_get_attr },
-  { "net_forward", net_forward },
-  { "net_backward", net_backward },
-  { "net_copy_from", net_copy_from },
-  { "net_reshape", net_reshape },
-  { "net_save", net_save },
-  { "layer_get_attr", layer_get_attr },
-  { "layer_get_type", layer_get_type },
-  { "blob_get_shape", blob_get_shape },
-  { "blob_reshape", blob_reshape },
-  { "blob_get_data", blob_get_data },
-  { "blob_set_data", blob_set_data },
-  { "blob_get_diff", blob_get_diff },
-  { "blob_set_diff", blob_set_diff },
-  { "set_mode_cpu", set_mode_cpu },
-  { "set_mode_gpu", set_mode_gpu },
-  { "set_device", set_device },
-  { "get_init_key", get_init_key },
-  { "reset", reset },
-  { "read_mean", read_mean },
-  { "init_log", init_log },
-  // The end.
-  { "END", NULL },
+	// Public API functions
+	{ "get_solver", get_solver },
+	{ "solver_get_attr", solver_get_attr },
+	{ "solver_get_iter", solver_get_iter },
+	{ "solver_restore", solver_restore },
+	{ "solver_solve", solver_solve },
+	{ "solver_step", solver_step },
+	{ "get_net", get_net },
+	{ "net_get_attr", net_get_attr },
+	{ "net_forward", net_forward },
+	{ "net_backward", net_backward },
+	{ "net_copy_from", net_copy_from },
+	{ "net_reshape", net_reshape },
+	{ "net_save", net_save },
+	{ "layer_get_attr", layer_get_attr },
+	{ "layer_get_type", layer_get_type },
+	{ "blob_get_shape", blob_get_shape },
+	{ "blob_reshape", blob_reshape },
+	{ "blob_get_data", blob_get_data },
+	{ "blob_set_data", blob_set_data },
+	{ "blob_get_diff", blob_get_diff },
+	{ "blob_set_diff", blob_set_diff },
+	{ "set_mode_cpu", set_mode_cpu },
+	{ "set_mode_gpu", set_mode_gpu },
+	{ "set_device", set_device },
+	{ "get_init_key", get_init_key },
+	{ "reset", reset },
+	{ "read_mean", read_mean },
+	// The end.
+	{ "END", NULL },
 };
+
+void initGlog()
+{
+	FLAGS_log_dir = ".\\log\\";
+	_mkdir(FLAGS_log_dir.c_str());
+	std::string LOG_INFO_FILE;
+	std::string LOG_WARNING_FILE;
+	std::string LOG_ERROR_FILE;
+	std::string LOG_FATAL_FILE;
+	std::string now_time = boost::posix_time::to_iso_extended_string(boost::posix_time::second_clock::local_time());
+	now_time[13] = '-';
+	now_time[16] = '-';
+	LOG_INFO_FILE = FLAGS_log_dir + "INFO" + now_time + ".txt";
+	google::SetLogDestination(google::GLOG_INFO, LOG_INFO_FILE.c_str());
+	LOG_WARNING_FILE = FLAGS_log_dir + "WARNING" + now_time + ".txt";
+	google::SetLogDestination(google::GLOG_WARNING, LOG_WARNING_FILE.c_str());
+	LOG_ERROR_FILE = FLAGS_log_dir + "ERROR" + now_time + ".txt";
+	google::SetLogDestination(google::GLOG_ERROR, LOG_ERROR_FILE.c_str());
+	LOG_FATAL_FILE = FLAGS_log_dir + "FATAL" + now_time + ".txt";
+	google::SetLogDestination(google::GLOG_FATAL, LOG_FATAL_FILE.c_str());
+	FLAGS_alsologtostderr = 1;
+	string log_dir = ".\\log\\";
+	string log_file = log_dir + "MATLAB_INFO" + now_time + ".txt";
+	FILE *stream = freopen(log_file.c_str(), "w", stderr);
+
+	if (stream == NULL)
+	{
+		mxERROR("error on freopen\n");
+	}
+	else
+	{
+		fprintf(stderr, "Open freopen.txt successfully!\r\n");
+	}
+}
 
 /** -----------------------------------------------------------------
 ** matlab entry point.
